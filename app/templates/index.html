@@ -60,13 +60,15 @@
 
         <div class="form-control-feedback">{{ form.postcodes.errors }}</div>
 
+        <small class="form-text text-muted">One postcode per line or separate with commas.</small>
+
       </div>
 
       <div class="form-check">
 
         <label class="form-check-label" for="{{ form.clean.id_for_label }}">
           {{ form.clean }}
-          Clean
+          Remove Invalid Postcodes
         </label>
 
       </div>
