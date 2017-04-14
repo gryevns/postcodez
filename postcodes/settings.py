@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('SECRET_KEY', default='local')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', default=True)
+DEBUG = os.getenv('DEBUG', default=False)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'postcodez.herokuapp.com']
 
@@ -123,7 +123,7 @@ STATIC_URL = '/static/'
 
 RQ_QUEUES = {
     'default': {
-        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379/0'),
+        'URL': os.getenv('REDIS_URL', 'redis://localhost:6379/0'),
         'DEFAULT_TIMEOUT': 500,
     }
 }
