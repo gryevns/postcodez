@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  {% if postcodes_exist %}
+
+  <div class="progress mb-4">
+    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: {{progress}}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+      {{progress|floatformat:0}}%
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Postcode</th>
+        <th>Ward</th>
+        <th>Borough</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if postcodes %}
+      {% for postcode in postcodes %}
+        <tr>
+          <th scope="row">{{ postcode.postcode }}</th>
+          <td>{{ postcode.ward }}</td>
+          <td>{{ postcode.borough }}</td>
+        </tr>
+      {% endfor %}
+    {% else %}
+        <tr>
+          <th colspan="3" scope="row" class="text-center">
+            {{invalid}} invalid postcode{% if invalid > 1 %}s{% endif %}
+          </th>
+        </tr>
+    {% endif %}
+    </tbody>
+  </table>
+
+  <div class="row">
+    <div class="col">
+      <a class="btn btn-info" href="/" role="button">Refresh</a>
+      <a class="float-right btn btn-danger" href="/clear" role="button">Reset</a>
+    </div>
+  </div>
+
+  {% else %}
+
+  <div>
+    {{ form.non_field_errors }}
+    <form action="/" method="post">
+
+      {% csrf_token %}
+
+      <div class="form-group {% if form.postcodes.errors %}has-danger{% endif %}">
+
+        <label class="form-control-label" for="{{ form.postcodes.id_for_label }}">Postcodes</label>
+
+        {{ form.postcodes }}
+
+        <div class="form-control-feedback">{{ form.postcodes.errors }}</div>
+
+      </div>
+
+      <div class="form-check">
+
+        <label class="form-check-label" for="{{ form.clean.id_for_label }}">
+          {{ form.clean }}
+          Clean
+        </label>
+
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+
+  </div>
+
+  {% endif %}
+
+{% endblock %}
