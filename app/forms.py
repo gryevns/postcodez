@@ -23,9 +23,10 @@ class PostcodeForm(forms.Form):
     def clean_postcodes(self):
         postcodes = self.cleaned_data['postcodes']
         postcodes = postcodes.replace(',', '\n')
-        unique = set([s.strip().upper() for s in postcodes.splitlines()])
-        if len(unique) > MAX_POSTCODES:
+        postcodes = set([s.strip().upper().replace(' ', '') for s in postcodes.splitlines()])
+        postcodes = [postcode for postcode in postcodes if len(postcode) < 8]
+        if len(postcodes) > MAX_POSTCODES:
             raise forms.ValidationError(
                 'Too many postcodes! More than {} unqiue postcodes entered.'.format(MAX_POSTCODES)
             )
-        return unique
+        return postcodes
