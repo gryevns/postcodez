@@ -5,6 +5,7 @@ Django==1.11
 django-rq==0.9.5
 gunicorn==19.7.1
 packaging==16.8
+psycopg2==2.7.1
 py==1.4.33
 pyparsing==2.2.0
 pytest==3.0.7
